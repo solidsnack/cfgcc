@@ -1,0 +1,50 @@
+
+  Notational conventions:
+
+ .  Production names are in angle brackets (`<production>') and contain any
+    character except angle brackets or parentheses.
+
+ .  Parentheses (`()') are used to group productions.
+
+ .  The question mark (`?') is used to indicate an optional thing.
+
+ .  The `+' and `*' are set-like, not list-like, plurality.
+
+
+
+
+                                                            Filesystem Clauses
+   ----------------------------------------------------------------------------
+
+    The filesystem clauses specify filesystem objects and their properties.
+
+    <fs clause>              =  <path component> is a <fs object>
+
+    <fs object>              =  hard link <target> <own>?
+                             |  soft link <target> <own>?
+                             |  character device <device> <own>? <mode>?
+                             |  block device <device> <own>? <mode>?
+                             |  file <contents>? <own>? <mode>?
+                             |  directory <containing>? <own>? <mode>?
+
+    <device>                 =  with device numbers <natural> <natural>
+
+    <containing>             =  containing <fs clause>+
+
+    <target>                 =  pointing to <full path>
+
+    <contents>               =  with contents (<hex> | <tar link>)
+
+    <mode>                   =  with mode <chmod spec>
+
+    <own>                    =  with <user>
+                             |  with <group>
+                             |  with <user> and <group>
+     where
+      <user>                 =  uid <natural> | user <name>
+      <group>                =  gid <natural> | group <name>
+
+    <path component>         =  // UTF-8, without `\0' or `/'.
+
+    <full path>              =  // UTF-8, without `\0'.
+
