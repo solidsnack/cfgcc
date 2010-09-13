@@ -48,3 +48,15 @@
 
     <full path>              =  // UTF-8, without `\0'.
 
+
+
+                                                                Passwd Clauses
+   ----------------------------------------------------------------------------
+
+    The passwd clauses specify entries in the UNIX passwd database.
+
+      <user>                 =  user <name> (with uid <natural>)?
+
+      <group>                =  group <name> (with gid <natural>)?
+
+
