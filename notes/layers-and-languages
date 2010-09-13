@@ -6,9 +6,9 @@
 
  .  A langauge of guarded actions (if this file is not here, create it).
 
- .  Raw shellscript.
+ .  Raw shellscript (`test ! -f <the file> || touch <the file>').
 
-  The guarded actions have the quality, hard to capture, that the guard is
-  closely related to the action. The essence of it is, if we check the guard,
-  run the action and check it again, the guard is satisfied.
+  The guarded actions have the quality that, if we check the guard, run the
+  action and check it again, the guard is satisfied. Guarded actions are
+  made idempotent due to the guard.
 
