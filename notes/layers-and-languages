@@ -1,0 +1,14 @@
+
+  The configuration management system, even after parsing of the YAML is
+  completely, works with a few different languages:
+
+ .  A language of declarative specifications (there is a file here).
+
+ .  A langauge of guarded actions (if this file is not here, create it).
+
+ .  Raw shellscript.
+
+  The guarded actions have the quality, hard to capture, that the guard is
+  closely related to the action. The essence of it is, if we check the guard,
+  run the action and check it again, the guard is satisfied.
+
