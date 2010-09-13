@@ -82,3 +82,16 @@
                                   gid: <natural> ?
 
 
+
+
+                                                                   Not Clauses
+   ----------------------------------------------------------------------------
+
+    Do we need clauses to say what's not there? This goes against the grain of
+    declarative specification, I think; but I also feel like, we should be
+    able to describe the negative space, too.
+
+    One way that file removal emerges naturally is when you are installing a
+    new version of the same package. Files that are no longer needed should be
+    deleted.
+
