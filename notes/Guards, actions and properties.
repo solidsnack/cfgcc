@@ -1,19 +1,18 @@
-
   A specification of a property of a UNIX system leads naturally to a check
   for that property and often leads to an action that imposes that property on
   the system. For example:
 
- .  If we are given as a property that there is a file at `/README', then we
-    can check for that file with `test -f /README' and create that file with
-    `touch /README'.
+ .  If we are given as a property that there is a file at '/README', then we
+    can check for that file with 'test -f /README' and create that file with
+    'touch /README'.
 
- .  If we are given that there is a user `joe', we can check for this user
-    with `id joe' and create this user with `useradd joe'.
+ .  If we are given that there is a user 'joe' we can check for this user
+    with `id joe' and create this user using 'useradd joe'.
 
-  However, some properties are hard to come up with an action for even when
+  Some of the properties are hard to come up with an action for even when
   the check is easy to specify.
 
- .  We can easily check for a soft link at `/etc/apache2/sites-enabled/01-blog'
+ .  We can easily check for a soft link at '/etc/apache2/sites-enabled/01-blog'
     but it's hard to know what soft link to create if it's not there; we need
     to specify a target.
 
