@@ -1,0 +1,84 @@
+
+  We use a kind of BNF that has been extended with YAML literals (or a YAML
+  that has been extended with labelled productions). The literals on the right
+  side are similar to YAML except for cases involving BNF like constructs.
+  Uses of:
+
+    +  *  |  ( )  ?  < >  =
+
+  must be quoted to avoid ambiguity. The `+' and `*' are here taken to form
+  arrays. The `[]' and `{}' are used in their YAML sense, forming lists and
+  dictionaries, respectively.
+
+
+
+
+                                                            Filesystem Clauses
+   ----------------------------------------------------------------------------
+
+    The filesystem clauses specify filesystem objects and their properties.
+
+    <fs clauses begin>       =  /: <directory>
+
+    <fs clause>              =  <path component>: <fs object>
+
+    <fs object>              =  type: (character | block) device
+                                <device>
+                             |  type: (hard link | soft link)
+                                <link>
+                             |  type: file
+                                <file>
+                             |  type: directory
+                                <directory>
+
+    <device>                 =  major: <natural>
+                                minor: <natural>
+                                <mode>?
+                                <user or uid>?
+                                <group or gid>?
+
+    <link>                   =  target: <path>
+                                <user or uid>?
+                                <group or gid>?
+
+    <file>                   =  (read: <path> | hex: <hex> | literal: <string>)
+                                <mode>?
+                                <user or uid>?
+                                <group or gid>?
+
+    <directory>              =  (read: <path> | containing: <fs clause>*)?
+                                exclusive: <bool>
+                                <mode>?
+                                <user or uid>?
+                                <group or gid>?
+
+    <user or uid>            =  user: <string> | uid: <natural>
+    <group or gid>           =  group: <string> | gid: <natural>
+
+    <path component>         =  // A string without `\0' or `/'.
+
+    <path>                   =  // A string without `\0'.
+
+
+
+
+                                                                Passwd Clauses
+   ----------------------------------------------------------------------------
+
+    The passwd clauses specify entries in the UNIX passwd database.
+
+      <user clauses begin>   =  users: <user>*
+                                exclusive: <bool>
+
+      <group clauses begin>  =  groups: <group>*
+                                exclusive: <bool>
+
+      <user>                 =  <string>:
+                                  uid: <natural> ?
+                                  (gid: <natural> | group: <string>)?
+                                  home: <path> ?
+
+      <group>                =  <string>:
+                                  gid: <natural> ?
+
+
