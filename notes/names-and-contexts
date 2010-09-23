@@ -1,0 +1,13 @@
+  For usernames and many other names, patterns are useless; for filenames,
+  patterns are essential. If we want to specify that there are no JPEG files
+  in a certain directory, we should be able to use `/<dir>/*.jpeg'.
+
+  We need to be able to specify pattern resolution with respect to:
+
+ .  The root of one or more tarballs sent with the YAML file.
+
+ .  The installation root.
+
+  These are _contexts_ and we need labels for them.
+
+
