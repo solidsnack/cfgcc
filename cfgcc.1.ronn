@@ -1,0 +1,43 @@
+cfgcc(1) -- compile configurations to shell scripts
+===================================================
+
+## SYNOPSIS
+
+`cfgcc` (<yaml> | <dir> | <archive>)+ > configuration.bash
+
+## DESCRIPTION
+
+**cfgcc* converts a YAML specification of a UNIX system configuration in to a
+Bash script that checks and implements that configuration. The YAML format
+admits specification of filesystem layout as well as users and groups.
+
+## THE GENERATED SCRIPT
+
+The generated script offers three command modes:
+
+`script.bash` install <optional directory, defaults to root>?
+`script.bash` check <optional directory, defaults to root>?
+
+## SCRIPT CONTEXT
+
+Tarballs, directories, &c.
+
+## YAML SYNTAX
+
+YAML files listed on the command line are combined in order, the first taking
+precedence over the next when there is a conflict. 
+
+...
+
+## NAME GENERATION
+
+It is possible to specify rules with patterns; but how are those patterns
+resolved into concrete names? When the Bash script is built, all patterns are
+resolved into names from the directories and archives given on the command
+line. The Bash script contains only full filenames.
+
+This can be tricky if you want to make changes to files not in your tarballs.
+You can certainly express rules like "There are no files that match the
+pattern /srv/*/*.jpg." but it is another thing to get those names resolved.
+
+
