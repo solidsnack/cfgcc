@@ -1,0 +1,14 @@
+
+  If a user owns millions of files, renaming them is much better than removing
+  them, adding a new user and chowning all their files. Similarly, moving a
+  directory of MOVs is better than deleting them and reinstalling them
+  elsewhere.
+
+  However, we can't state "rename <x> to <y>" as an idempotent action. How
+  does one test that one moved <x> to <y> as opposed to creating <y> from
+  scratch? There is no way to disambugate the two cases on the testing side.
+
+  A rename is more like a compiler hint; it doesn't say *what should be there*
+  but rather *how to do it*. I am not sure how to even offer the possibility
+  of hinting the compiler.
+
