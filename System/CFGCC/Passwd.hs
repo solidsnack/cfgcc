@@ -7,6 +7,13 @@ import Data.Word
 import Data.Text
 
 
+data User                    =  Username UNick | UserID UID
+ deriving (Eq, Ord, Show)
+
+data Group                   =  Groupname GNick | GroupID GID
+ deriving (Eq, Ord, Show)
+
+
 newtype UNick                =  UNick Nick
  deriving (Eq, Ord, Show, IsString)
 
@@ -30,4 +37,13 @@ newtype ID                   =  ID Word16
 
 data Password                =  Hashed Text | Literal Text
  deriving (Eq, Ord, Show)
+
+
+data (Monad m) => UserEntry m = UserEntry (m UNick) --  Nick.
+                                          (m Password) --  Password.
+                                          (m UID) --  Numeric ID.
+                                          (m Group) --  Primary group.
+                                          (m Text) --  Comment.
+                                          (m Path) --  Home.
+                                          (m Path) --  Shell.
 

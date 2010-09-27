@@ -17,12 +17,13 @@ data FS where
   | EnsureContents Path
 
 data Passwd where
-  = EnsureUser User (Maybe Password)    --  Password, as hash or literal.
-                    (Maybe UID)         --  Numeric ID.
-                    (Maybe Group)       --  Primary group.
-                    (Maybe Text)        --  Comment.
-                    (Maybe Path)        --  Home.
-                    (Maybe Path)        --  Shell.
-  | EnsureGroup Group (Maybe GID)       --  Numeric ID.
-  | EnsureUsersInGroup Group (Set User) --  Lower bound on members.
+  = EnsureUser User (Maybe Password)          --  Password, as hash or literal.
+                    (Maybe UID)               --  Numeric ID.
+                    (Maybe Group)             --  Primary group.
+                    (Maybe Text)              --  Comment.
+                    (Maybe Path)              --  Home.
+                    (Maybe Path)              --  Shell.
+  | EnsureGroup Group (Maybe GID)             --  Numeric ID.
+  | EnsureMembership Group (Set User)         --  Members to include.
+                           (Set User)         --  Members to exclude.
 
