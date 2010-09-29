@@ -1,10 +1,12 @@
 
-module System.CFGCC.Passwd where
+module System.CFGCC.PasswdDB where
 
 import Data.String
 import Data.Word
 
 import Data.Text
+
+import System.CFGCC.FSLayout
 
 
 data User                    =  Username UNick | UserID UID

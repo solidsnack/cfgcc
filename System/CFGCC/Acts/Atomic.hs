@@ -6,7 +6,7 @@ import Data.Set
 import Data.Text
 
 import System.CFGCC.Names
-import System.CFGCC.Passwd
+import System.CFGCC.PasswdDB
 
 
 {-| FS acts all set a property of an implicit filesystem object. 
