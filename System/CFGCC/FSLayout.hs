@@ -18,6 +18,5 @@ instance IsString Path where
 data ObjectSpec              =  Symlink Path -- ^ Link to source.
                              |  Directory
                              |  File Bool -- ^ Flag to check file contents.
-                             |  Not (ObjectSpec)
  deriving (Eq, Show, Ord)
 
