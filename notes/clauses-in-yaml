@@ -6,59 +6,110 @@
 
     +  *  |  ( )  ?  < >  =
 
-  must be quoted to avoid ambiguity. The `+' and `*' are here taken to form
-  arrays. The `[]' and `{}' are used in their YAML sense, forming lists and
-  dictionaries, respectively.
+  must be quoted to avoid ambiguity. The `[]' and `{}' are used in their YAML
+  sense, forming lists and dictionaries, respectively.
 
 
 
 
-                                                            Filesystem Clauses
+                                                                CFGCC Document
    ----------------------------------------------------------------------------
 
-    The filesystem clauses specify filesystem objects and their properties.
+    Packages are not something I need to do right away.
 
-    <fs clauses begin>       =  /: <directory>
+    <cfg>                    =  fs: ?
+                                  layout: <fs object>* ?
+                                  modes: [<mode>] ?
+                                  ownership: [<ownership>] ?
+                                userdb: ?
+                                  users: <user>* ?
+                                  groups: <groups>* ?
+                                packages: ?
+                                  [<package>] ?
 
-    <fs clause>              =  <path component>: <fs object>
 
-    <fs object>              =  type: (character | block) device
-                                <device>
-                             |  type: (hard link | soft link)
-                                <link>
-                             |  type: file
-                                <file>
-                             |  type: directory
-                                <directory>
+                                                        Filesystem Identifiers
+   ----------------------------------------------------------------------------
 
-    <device>                 =  major: <natural>
-                                minor: <natural>
-                                <mode>?
-                                <user or uid>?
-                                <group or gid>?
+    Filesystem identifiers need to indicate the type of the object as well as
+    the source of the name. Filesystem identifiers may use patterns as well
+    as concrete names; we must be sure to disambiguate these syntactically to
+    make it easy for people to express their intent.
 
-    <link>                   =  target: <path>
-                                <user or uid>?
-                                <group or gid>?
+    A filesystem name is:
 
-    <file>                   =  (read: <path> | hex: <hex> | literal: <string>)
-                                <mode>?
-                                <user or uid>?
-                                <group or gid>?
+      <context>.<type>/<path or pattern>
 
-    <directory>              =  (read: <path> | containing: <fs clause>*)?
-                                exclusive: <bool>
-                                <mode>?
-                                <user or uid>?
-                                <group or gid>?
+    Object type names are drawn from the abbreviations use by `mknod', `ls'
+    and friends:
 
-    <user or uid>            =  user: <string> | uid: <natural>
-    <group or gid>           =  group: <string> | gid: <natural>
+      f   regular file
+      d   directory
+      l   symlink
+      p   pipe
+      c   character device
+      b   block device
 
-    <path component>         =  // A string without `\0' or `/'.
+    Filesystem contexts are natural numbers in decimal format with any number
+    of digits. The default context, the first directory that is part of the
+    package, is given the number 1.
 
-    <path>                   =  // A string without `\0'.
+    To indicate the profile in the default context, use: 
 
+      1.f/etc/profile
+
+    Patterns are necessary for some things; we can extend the syntax by
+    doubling and tripling the slashes:
+
+      1.f//et*/profile              --  Shell glob.
+      1.f///et.*/profile             --  Regular expression.
+
+    We'll delay this, though; we need to add some kind of negation and we also
+    just don't want to deal with it right now.
+
+    In the `mode' and `ownership' specifications you may not care about the
+    type; in that case, you replace it with a question mark:
+
+      1.?//usr/local/**
+
+    There are thus two kinds of filesystem names: those with concrete types
+    are <fs typed> and those which may have a question mark are <fs any type>.
+
+
+                                                                      Negation
+   ----------------------------------------------------------------------------
+
+    Every object can be deleted. Deletions can be less specific than
+    creations; they have different criterion for validity.
+
+    Syntactically, we should be able to indicate negation with a `!'. We
+    should also be able to indicate it with a key `!'.
+
+
+                                                             Filesystem Layout
+   ----------------------------------------------------------------------------
+
+    Filesystem layout is handle separately from permissions and modes.
+
+    <fs object>              =  <fs typed>: <fs object>
+
+    <regular file>           =  <context>.f/<path or pattern>:
+                                  content: (source | x: <hex> | s: <string>)
+
+    <directory>              =  <context>.d/<path or pattern>:
+
+    <symlink>                =  <context>.l/<path or pattern>:
+                                  source: <path>
+
+    <pipe>                   =  <context>.p/<path or pattern>:
+
+    <character device>       =  <context>.c/<path or pattern>:
+                                  major: <natural>
+                                  minor: <natural>
+
+    <block device>           =  <context>.b/<path or pattern>:
+                                  major: <natural>
+                                  minor: <natural>
 
 
 
