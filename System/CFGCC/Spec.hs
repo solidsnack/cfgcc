@@ -13,9 +13,8 @@ import Data.Text
 
 
 
-data Spec e where
-  Is                        ::  (Entry e) => Name e -> Info e -> Spec e
-  IsNot                     ::  (Entry e) => Name e -> Maybe (Info e) -> Spec e
+data (Entry e) => Spec e     =  Is    (Name e) (       Info e )
+                             |  IsNot (Name e) (Maybe (Info e))
 
 
 class Entry thing where
