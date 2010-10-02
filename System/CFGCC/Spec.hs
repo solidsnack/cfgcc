@@ -46,7 +46,6 @@ instance Entry Group where
 
 
 data Password                =  Literal Text | Hashed Text
-   deriving (Eq, Show, Ord)                          
 
 
 
@@ -60,7 +59,7 @@ instance Entry FSObject where
                              |  Directory (Maybe Mode) (Maybe Ownership)
                              |  Link (Maybe (Name FSObject))
 
-             
+
 data Mode                    =  Mode Ternary Ternary Ternary Ternary -- user
                                      Ternary Ternary Ternary Ternary -- group
                                      Ternary Ternary Ternary Ternary -- other
