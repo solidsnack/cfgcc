@@ -7,11 +7,12 @@ import Data.String
 
 
 newtype Nick                 =  Nick Text
- deriving (Eq, Ord, Show, IsString)
+ deriving (Eq, Ord, Show)
 
 instance IsString Nick where
-  fromString s  =  case check t of Ok   ->  Nick t
-                                   err  ->  error (message err)
+  fromString s
+    = case check t of Ok    ->  Nick t
+                      err   ->  error (message err)
    where
     t                        =  Text.pack s
 
@@ -19,22 +20,24 @@ instance IsString Nick where
 {-| Check if text is an acceptable UNIX username.
  -}
 check                       ::  Text -> Check
-check
-  | Text.null t              =  Ok
+check t
+  | Text.null t              =  Empty
   | "@" `Text.isPrefixOf` t  =  BadLeadingNIS '@'
   | "+" `Text.isPrefixOf` t  =  BadLeadingNIS '+'
   | "-" `Text.isPrefixOf` t  =  BadLeadingNIS '-'
   | (== ':') `Text.any` t    =  Bad ':'
+  | otherwise                =  Ok
 
 
 {-| Characterizes success or failure of username check. 
  -}
-data Check                   =  Ok | BadLeadingNIS Char | Bad Char
+data Check                   =  Ok | Empty | BadLeadingNIS Char | Bad Char
 
 
 message                     ::  Check -> String
 message Ok                   =  "Okay."
+message Empty                =  "Empty usernames are not allowed."
 message (BadLeadingNIS c)
   = "Leading `" ++ [c] ++"' interferes with NIS naming conventions."
-message (BadChar c) = "Char `" ++ [c] ++"' is rejected by `useradd.'"
+message (Bad c) = "Char `" ++ [c] ++"' is rejected by `useradd.'"
 
