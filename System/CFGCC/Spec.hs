@@ -21,10 +21,12 @@ data Spec e where
 class Entry thing where
   data Name thing           ::  *
   data Info thing           ::  *
-  check                     ::  Name thing -> Maybe (Info thing) -> IO Bool
-  remove                    ::  Name thing -> IO ()
-  create                    ::  Name thing -> Info thing -> IO ()
+  check                     ::  Name thing -> Maybe (Info thing) -> Test
+  remove                    ::  Name thing -> Action
+  create                    ::  Name thing -> Info thing -> Action
 
+data Action
+data Test
 
 
 
